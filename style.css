@@ -1,0 +1,12 @@
+.store-background {
+    background-color: rgba(27,40,56,255);
+}
+
+.store-header-and-footer {
+    background-color: rgba(23,26,33,255);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
