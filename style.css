@@ -2,11 +2,16 @@
     background-color: rgba(27,40,56,255);
 }
 
-.store-header-and-footer {
+.store-menu {
     background-color: rgba(23,26,33,255);
 }
 
 .center {
     display: flex;
     justify-content: center;
+}
+
+.justify {
+    text-align: justify;
+    text-justify: auto;
 }
