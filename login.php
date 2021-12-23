@@ -1,4 +1,13 @@
 <?php include("header.php"); ?>
+
+<?php
+    require_once("db_utils.php");
+    $db = new Database();
+    if (isset($_POST["username"]) && isset($_POST["password"])) {
+        $db->login($_POST["username"], $_POST["password"]);
+    }
+?>
+
 <div class="container">
     <div class="row">
         <div class="col"></div>
@@ -7,7 +16,7 @@
             <form action="" method="post">
                 <div class="mb-3">
                     <label class="form-label" for="username">Username</label>
-                    <input class="form-control" id="username" type="text" name="username">
+                    <input class="form-control" id="username" autocomplete="off" type="text" name="username">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="password">Password</label>
@@ -21,4 +30,5 @@
         <div class="col"></div>
     </div>
 </div>
+
 <?php include("footer.php"); ?>

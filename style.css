@@ -6,6 +6,10 @@
     background-color: rgba(23,26,33,255);
 }
 
+.store-item {
+    background-color: rgba(22,32,45,255);
+}
+
 .center {
     display: flex;
     justify-content: center;
@@ -14,4 +18,8 @@
 .justify {
     text-align: justify;
     text-justify: auto;
+}
+
+.add-to-cart-button {
+    display: inline-block;
 }
