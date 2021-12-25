@@ -104,6 +104,15 @@
             return $result;
         }
 
+        public function testHtml() {
+            $result = "";
+            $result .= "<tr>";
+            $result .= "<td><img width=\"100\" src=\"$this->imageUrl\"></td>";
+            $result .= "<td>$this->title</td>";
+            $result .= "</tr>";
+            return $result;
+        }
+
         /*public function getId() {
             return $this->id;
         }

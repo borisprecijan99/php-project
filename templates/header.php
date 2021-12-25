@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icons/favicon.ico">
+    <link href="bootstrap 5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Steam Store</title>
 </head>
 <body class="store-background text-light">
     <nav class="navbar navbar-expand-lg navbar-dark store-menu">
         <div class="container">
-            <a class="navbar-brand" href="index.php"><img src="https://store.akamai.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"></a>
+            <a class="navbar-brand" href="index.php"><img src="images/steam_logo.svg"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,26 +24,30 @@
                     <li class="nav-item">
                         <a class="nav-link" href="about.php">ABOUT</a>
                     </li>
+                    <?php if (isset($_COOKIE["username"])) { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="library.php">LIBRARY</a>
                     </li>
+                    <?php } ?>
+                    <?php if (!isset($_COOKIE["username"])) { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="login.php">LOGIN</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="register.php">REGISTER</a>
                     </li>
+                    <?php } ?>
+                    <?php if (isset($_COOKIE["username"])) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">LOGOUT</a>
+                        <a class="nav-link" href="index.php?logout">LOGOUT</a>
                     </li>
+                    <?php } ?>
                 </ul>
                 <form class="d-flex" action="index.php">
                     <a href="cart.php" class="btn btn-success ps-3 pe-3 me-3">CART</a>
-                    <input class="form-control me-2" type="search" placeholder="Search games" aria-label="Search" name="query">
+                    <input class="form-control me-2" type="search" placeholder="Search games" aria-label="Search" name="query" autocomplete="off">
                     <button class="btn btn-secondary" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
+                        <img src="images/search.svg">
                     </button>
                 </form>
             </div>

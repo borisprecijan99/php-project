@@ -1,5 +1,5 @@
 <?php
-	require_once("game.php");
+	require_once("classes/game.php");
 
     class Database {
 	    private $conn;
@@ -60,15 +60,15 @@
 				$imageUrl = $queryResult["imageUrl"];
 				$description = $queryResult["description"];
 				$game = new Game($id, $title, $releaseDate, $developer, $publisher, $genres, $price, $imageUrl, $description);
-	    	} catch (PDOException $e) {
+			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
             return $game;
 		}
 
-		public function getGamesByUsername() {
+		public function getAllGamesByUserId($id) {
 			$result = array();
-			$query = "";
+			$query = "SELECT * FROM Game, Library WHERE userId=$id AND id=gameId";
 			try {
 				$queryResult = $this->conn->query($query);
 				foreach ($queryResult as $q) {
@@ -91,11 +91,13 @@
 		}
 
 		public function login($username, $password) {
-			$result = null;
+			$result = 0;
 			$query = "SELECT * FROM User WHERE username=\"$username\" AND password=\"$password\"";
 			try {
 				$queryResult = $this->conn->query($query)->fetch();
-				$result = $queryResult["username"];
+				if ($queryResult != null) {
+					$result = $queryResult["id"];
+				}
 	    	} catch (PDOException $e) {
 				echo $e->getMessage();
 			}

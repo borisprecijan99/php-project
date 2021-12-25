@@ -1,14 +1,19 @@
-<?php include("header.php"); ?>
-
 <?php
-    require_once("db_utils.php");
+    require_once("database/db_utils.php");
     $db = new Database();
     $query = "";
     if (isset($_GET["query"])) {
         $query = $_GET["query"];
     }
+    if (isset($_GET["logout"])) {
+        setcookie("id", "", time() - 1);
+        setcookie("username", "", time() - 1);
+        header("Location: index.php");
+    }
     $games = $db->getAllGames($query);
 ?>
+
+<?php include("templates/header.php"); ?>
 
 <div class="container ps-3 pe-3 pb-3">
     <div class="row">
@@ -27,4 +32,4 @@
     </div>
 </div>
 
-<?php include("footer.php"); ?>
+<?php include("templates/footer.php"); ?>
