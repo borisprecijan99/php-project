@@ -9,12 +9,12 @@
         private $price;
         private $imageUrl;
         private $description;
+        private $status;
 
         public function __construct($id, $title, $releaseDate, $developer, $publisher, $genres, $price, $imageUrl, $description) {
             $this->id = $id;
             $this->title = $title;
             $this->releaseDate = date("j M, Y", strtotime($releaseDate));
-            $this->developer = $developer;
             $this->developer = $developer;
             $this->publisher = $publisher;
             $this->genres = explode(",", $genres);
@@ -26,11 +26,14 @@
             $this->description = $description;
         }
 
-        public function getHtml() {
+        public function getHtmlForHomePage() {
             $result = "";
-            $result .= "<a href=\"game_details.php?id=$this->id\" class=\"text-decoration-none text-reset\">";
             $result .= "<div class=\"col\">";
+            $result .= "<form action=\"game_details.php\" method=\"post\">";
+            $result .= "<input type=\"hidden\" name=\"id\" value=\"$this->id\">";
+            $result .= "<input type=\"hidden\" name=\"status\" value=\"$this->status\">";
             $result .= "<div class=\"card h-100 store-item\">";
+            $result .= "<button type=\"submit\" class=\"btn p-0 text-reset\">";
             $result .= "<img src=\"$this->imageUrl\" class=\"card-img-top\">";
             $result .= "<div class=\"card-body\">";
             $result .= "<h6 class=\"card-title center\">$this->title</h6>";
@@ -42,13 +45,14 @@
                 $price = $this->price . "€";
             }
             $result .= "<div class=\"card-footer text-success center\">$price</div>";
+            $result .= "</button>";
             $result .= "</div>";
+            $result .= "</form>";
             $result .= "</div>";
-            $result .= "</a>";
             return $result;
         }
 
-        public function getDetailsHtml() {
+        public function getHtmlForGameDetailsPage() {
             $result = "";
             $result .= "<div class=\"card m-3 store-item\">";
             $result .= "<div class=\"row g-0\">";
@@ -81,8 +85,10 @@
             $result .= "</tr>";
             $result .= "</table>";
             $result .= "<div class=\"center\">";
-            $result .= "<form action=\"\" method=\"post\" class=\"bg-dark center p-2 add-to-cart-button\">";
+            $result .= "<form action=\"game_details.php\" method=\"post\" class=\"bg-dark center p-2 add-to-cart-button\">";
             $result .= "<input type=\"hidden\" name=\"id\" value=\"$this->id\">";
+            $result .= "<input type=\"hidden\" name=\"status\" value=\"$this->status\">";
+            $result .= "<input type=\"hidden\" name=\"add\">";
             $price = "";
             if ($this->price == 0) {
                 $price = "FREE";
@@ -90,7 +96,13 @@
                 $price = $this->price . "€";
             }
             $result .= "<span class=\"pe-3 text-success\">$price</span>";
-            $result .= "<button class=\"btn btn-success ps-4 pe-4\" type=\"submit\">Add to Cart</button>";//zavrsiti!
+            if ($this->status == "IN LIBRARY") {
+                $result .= "<button disabled class=\"btn btn-success ps-4 pe-4\">In Library</button>";
+            } else if ($this->status == "IN CART") {
+                $result .= "<button disabled class=\"btn btn-success ps-4 pe-4\">In Cart</button>";
+            } else if ($this->status == "NOT IN CART") {
+                $result .= "<button class=\"btn btn-success ps-4 pe-4\" type=\"submit\">Add to Cart</button>";
+            }
             $result .= "</form>";
             $result .= "</div>";
             $result .= "</div>";
@@ -104,7 +116,7 @@
             return $result;
         }
 
-        public function testHtml() {
+        public function getHtmlForLibraryPage() {
             $result = "";
             $result .= "<tr>";
             $result .= "<td><img width=\"100\" src=\"$this->imageUrl\"></td>";
@@ -113,7 +125,23 @@
             return $result;
         }
 
-        /*public function getId() {
+        public function getHtmlForCartPage() {
+            $result = "";
+            $result .= "<tr>";
+            $result .= "<td><img width=\"100\" src=\"$this->imageUrl\"></td>";
+            $result .= "<td>$this->title</td>";
+            $price = "";
+            if ($this->price == 0) {
+                $price = "FREE";
+            } else {
+                $price = $this->price . "€";
+            }
+            $result .= "<td class=\"text-success\">$price</td>";
+            $result .= "</tr>";
+            return $result;
+        }
+
+        public function getId() {
             return $this->id;
         }
 
@@ -147,6 +175,14 @@
 
         public function getImageUrl() {
             return $this->imageUrl;
-        }*/
+        }
+
+        public function setStatus($status) {
+            $this->status = $status;
+        }
+
+        public function getStatus() {
+            return $this->status;
+        }
     }
 ?>

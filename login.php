@@ -1,6 +1,7 @@
 <?php
     require_once("database/db_utils.php");
     $db = new Database();
+    $error = false;
     if (isset($_POST["username"]) && isset($_POST["password"])) {
         $username = $_POST["username"];
         $password = $_POST["password"];
@@ -9,6 +10,8 @@
             setcookie("id", $id, time() + 365 * 24 * 60 * 60);
             setcookie("username", $username, time() + 365 * 24 * 60 * 60);
             header("Location: index.php");
+        } else {
+            $error = true;
         }
     }
 ?>
@@ -21,6 +24,11 @@
         <div class="mt-5 col-xxl-2 col-xl-3 col-lg-4 col-md-5 col-sm-6 col-7">
             <h1 class="center">Login</h1>
             <form action="login.php" method="post">
+                <?php if ($error) { ?>
+                <div class="mb-3 alert alert-danger">
+                    Invalid credentials
+                </div>
+                <?php } ?>
                 <div class="mb-3">
                     <label class="form-label" for="username">Username</label>
                     <input class="form-control" id="username" autocomplete="off" type="text" name="username" required>
