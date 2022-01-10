@@ -3,10 +3,10 @@
     $db = new Database();
     $error = false;
     if (isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["username"]) && isset($_POST["password"])) {
-        $firstName = $_POST["firstName"];
-        $lastName = $_POST["lastName"];
-        $username = $_POST["username"];
-        $password = $_POST["password"];
+        $firstName = htmlspecialchars($_POST["firstName"]);
+        $lastName = htmlspecialchars($_POST["lastName"]);
+        $username = htmlspecialchars($_POST["username"]);
+        $password = htmlspecialchars($_POST["password"]);
 
         if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
             if (str_starts_with($_FILES["image"]["type"], "image/")) {
@@ -23,7 +23,7 @@
                     $ok = false;
                     break;
                 case UPLOAD_ERR_NO_FILE:
-                    $ok = $db->register($firstName, $lastName, $username, $password, "");
+                    $ok = $db->register($firstName, $lastName, $username, $password, null);
             }
         }
         if ($ok) {

@@ -13,7 +13,7 @@
         $_SESSION["cart"] = array();
     }
     if (isset($_GET["query"])) {
-        $query = $_GET["query"];
+        $query = htmlspecialchars($_GET["query"]);
     }
 
     if (isset($_COOKIE["id"])) {

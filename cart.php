@@ -12,7 +12,7 @@
         <div class="mt-5 col-10">
             <h1 class="center mb-3">Cart</h1>
             <?php if (!isset($_SESSION["cart"]) || empty($_SESSION["cart"])) { ?>
-            <h6 class="center">Cart is empty</h6><!--videti za tekst i velicinu-->
+            <p class="center">Cart is empty</p>
             <?php } else { ?>
             <table class="table align-middle text-reset">
                 <?php

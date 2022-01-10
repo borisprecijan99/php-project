@@ -15,7 +15,6 @@
         <div class="col"></div>
         <div class="mt-5 col-10">
             <h1 class="center mb-3">Library</h1>
-            <!--ubaciti negde html special chars (ili ovde ili u register.php! videti to)-->
             <table class="table align-middle text-reset">
                 <?php
                     foreach ($games as $game) {

@@ -44,6 +44,11 @@
                     <?php } ?>
                 </ul>
                 <form class="d-flex" action="index.php">
+                    <?php if (isset($_COOKIE["username"])) { ?>
+                    <span class="navbar-text me-3">
+                        <?php echo $_COOKIE["username"]; ?>
+                    </span>
+                    <?php } ?>
                     <a href="cart.php" class="btn btn-success ps-3 pe-3 me-3">CART</a>
                     <input class="form-control me-2" type="search" placeholder="Search games" aria-label="Search" name="query" autocomplete="off">
                     <button class="btn btn-secondary" type="submit">

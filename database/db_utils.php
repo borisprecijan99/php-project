@@ -1,28 +1,28 @@
 <?php
 	require_once("classes/game.php");
 
-    class Database {
-	    private $conn;
+	class Database {
+		private $conn;
 
-	    public function __construct($configFile = "config.ini") {
-		    if ($config = parse_ini_file($configFile)) {
-			    $host = $config["host"];
-			    $database = $config["database"];
-			    $username = $config["username"];
-			    $password = $config["password"];
-			    $this->conn = new PDO("mysql:host=$host;dbname=$database", $username, $password);
-		    } else {
-			    exit("Missing configuration file.");
-			    $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	        }
-        }
+		public function __construct($configFile = "config.ini") {
+			if ($config = parse_ini_file($configFile)) {
+				$host = $config["host"];
+				$database = $config["database"];
+				$username = $config["username"];
+				$password = $config["password"];
+				$this->conn = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+			} else {
+				exit("Missing configuration file.");
+				$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			}
+		}
 
-	    public function __destruct() {
-	        $this->conn = null;
-	    }
+		public function __destruct() {
+			$this->conn = null;
+		}
 
-        public function getAllGamesUserNotLoggedIn($queryString) {
-            $result = array();
+		public function getAllGamesUserNotLoggedIn($queryString) {
+			$result = array();
 			$query = "SELECT * FROM Game WHERE title LIKE \"%$queryString%\"";
 			try {
 				$queryResult = $this->conn->query($query);
@@ -39,11 +39,11 @@
 					$game = new Game($id, $title, $releaseDate, $developer, $publisher, $genres, $price, $imageUrl, $description);
 					$result[] = $game;
 				}
-	    	} catch (PDOException $e) {
+			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
-            return $result;
-        }
+			return $result;
+		}
 
 		public function getAllGamesUserLoggedIn($queryString, $id) {
 			$gamesInLibrary = $this->getAllGamesInLibrary($queryString, $id);
@@ -74,7 +74,7 @@
 			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
-            return $game;
+			return $game;
 		}
 
 		public function getAllGamesInLibraryByUserId($id) {
@@ -95,10 +95,10 @@
 					$game = new Game($id, $title, $releaseDate, $developer, $publisher, $genres, $price, $imageUrl, $description);
 					$result[] = $game;
 				}
-	    	} catch (PDOException $e) {
+			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
-            return $result;
+			return $result;
 		}
 
 		private function getAllGamesInLibrary($queryString, $id) {
@@ -119,10 +119,10 @@
 					$game = new Game($id, $title, $releaseDate, $developer, $publisher, $genres, $price, $imageUrl, $description);
 					$result[] = $game;
 				}
-	    	} catch (PDOException $e) {
+			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
-            return $result;
+			return $result;
 		}
 
 		private function getAllGamesNotInLibrary($queryString, $id) {
@@ -143,26 +143,26 @@
 					$game = new Game($id, $title, $releaseDate, $developer, $publisher, $genres, $price, $imageUrl, $description);
 					$result[] = $game;
 				}
-	    	} catch (PDOException $e) {
+			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
-            return $result;
+			return $result;
 		}
 
 		public function addAllGamesToLibrary($gameIds, $id) {
 			$query = "INSERT INTO Library (userId, gameId) VALUES (:userId, :gameId)";
 			try {
 				$st = $this->conn->prepare($query);
-            	$st->bindValue("userId", $id, PDO::PARAM_INT);
+				$st->bindValue("userId", $id, PDO::PARAM_INT);
 				foreach ($gameIds as $gameId) {
 					$st->bindValue("gameId", $gameId, PDO::PARAM_INT);
 					$st->execute();
 				}
-            	return true;
-	    	} catch (PDOException $e) {
+				return true;
+			} catch (PDOException $e) {
 				echo $e->getMessage();
 			}
-            return false;
+			return false;
 		}
 
 		public function login($username, $password) {
@@ -173,10 +173,10 @@
 				if ($queryResult != null) {
 					$result = $queryResult["id"];
 				}
-	    	} catch (PDOException $e) {
-				echo $e->getMessage();
+			} catch (PDOException $e) {
+				//echo $e->getMessage();
 			}
-            return $result;
+			return $result;
 		}
 
 		public function register($firstName, $lastName, $username, $password, $imagePath) {
@@ -184,10 +184,10 @@
 			try {
 				$this->conn->query($query);
 				return true;
-	    	} catch (PDOException $e) {
+			} catch (PDOException $e) {
 				//echo $e->getMessage();
 			}
-            return false;
+			return false;
 		}
-    }
+	}
 ?>
